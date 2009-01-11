@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       :only       => [:new, :create]
   end
 
-  match 'signup'  => 'clearance/users#new', :as => 'sign_up'
+  match 'register'  => 'clearance/users#new', :as => 'sign_up'
   match 'login'  => 'clearance/sessions#new', :as => 'sign_in'
   match 'logout' => 'clearance/sessions#destroy', :via => :delete, :as => 'sign_out'
 end
