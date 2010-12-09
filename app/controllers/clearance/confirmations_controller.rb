@@ -12,7 +12,7 @@ class Clearance::ConfirmationsController < ApplicationController
   end
 
   def create
-    @user = ::User.find_by_id_and_confirmation_token(
+    @user = ::User.find_by_username_and_confirmation_token(
                    params[:user_id], params[:token])
     @user.confirm_email!
 
@@ -24,7 +24,7 @@ class Clearance::ConfirmationsController < ApplicationController
   private
 
   def redirect_signed_in_confirmed_user
-    user = ::User.find_by_id(params[:user_id])
+    user = ::User.find_by_username(params[:user_id])
     if user && user.email_confirmed? && current_user == user
       flash_success_after_create
       redirect_to(url_after_create)
@@ -32,7 +32,7 @@ class Clearance::ConfirmationsController < ApplicationController
   end
 
   def redirect_signed_out_confirmed_user
-    user = ::User.find_by_id(params[:user_id])
+    user = ::User.find_by_username(params[:user_id])
     if user && user.email_confirmed? && signed_out?
       flash_already_confirmed
       redirect_to(url_already_confirmed)
@@ -46,7 +46,7 @@ class Clearance::ConfirmationsController < ApplicationController
   end
 
   def forbid_non_existent_user
-    unless ::User.find_by_id_and_confirmation_token(
+    unless ::User.find_by_username_and_confirmation_token(
                   params[:user_id], params[:token])
       raise ActionController::Forbidden, "non-existent user"
     end
