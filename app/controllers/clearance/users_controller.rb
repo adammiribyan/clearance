@@ -6,7 +6,9 @@ class Clearance::UsersController < ApplicationController
 
   def new
     if params[:invite_token]
-      @user = ::User.new(params[:user])
+      @user = ::User.new(:invite_token => params[:invite_token])
+      @user.email = @user.invite.email if @user.invite
+      
       render :template => 'users/new'      
     else
       render :template => '/users/invite_required'
@@ -14,7 +16,7 @@ class Clearance::UsersController < ApplicationController
   end
 
   def create
-    @user = ::User.new params[:user]
+    @user = ::User.new(params[:user])
     if @user.save
       flash_notice_after_create
       redirect_to(url_after_create)
