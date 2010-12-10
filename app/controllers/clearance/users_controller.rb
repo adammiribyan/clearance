@@ -6,10 +6,10 @@ class Clearance::UsersController < ApplicationController
 
   def new
     if params[:invite_token]
-      render :template => '/users/invite_required'
-    else
       @user = ::User.new(params[:user])
-      render :template => 'users/new'
+      render :template => 'users/new'      
+    else
+      render :template => '/users/invite_required'
     end
   end
 
