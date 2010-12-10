@@ -5,8 +5,12 @@ class Clearance::UsersController < ApplicationController
   before_filter :redirect_to_root,  :only => [:new, :create], :if => :signed_in?
 
   def new
-    @user = ::User.new(params[:user])
-    render :template => 'users/new'
+    if params[:invite_token]
+      render :template => '/users/invite_required'
+    else
+      @user = ::User.new(params[:user])
+      render :template => 'users/new'
+    end
   end
 
   def create
