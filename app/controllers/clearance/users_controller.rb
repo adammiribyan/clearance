@@ -11,6 +11,7 @@ class Clearance::UsersController < ApplicationController
       
       render :template => 'users/new'      
     else
+      @applicant = Applicant.new
       render :template => '/users/invite_required'
     end
   end
