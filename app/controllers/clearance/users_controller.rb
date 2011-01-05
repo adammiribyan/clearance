@@ -9,6 +9,8 @@ class Clearance::UsersController < ApplicationController
       @user = ::User.new(:invite_token => params[:invite_token])
       @user.email = @user.invite.email if @user.invite
       
+      @applicant = Applicant.new
+      
       render :template => 'users/new'      
     else
       render :template => '/users/invite_required'
